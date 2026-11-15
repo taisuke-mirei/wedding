@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="format-detection" content="telephone=no">
+<title>Taisuke &amp; Mirei Wedding</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Great+Vibes&amp;family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400;1,500&amp;family=Zen+Old+Mincho:wght@400;500&amp;family=Noto+Sans+JP:wght@300;400&amp;display=swap">
+<style>
+/* =====================================================================
+   デザインの基本設定（色・フォント）— ここを変えると全体に反映されます
+   ===================================================================== */
+:root{
+  --navy:#1F3558;        /* 文字・濃い面 */
+  --green:#5FB59A;       /* 飾りの線・飛行機マーク */
+  --green-deep:#23705F;  /* 英字の小見出し */
+  --paper:#F3F2EA;       /* ページの地色 */
+  --card:#fff;           /* カードの地色 */
+  --line:#C5CBD1;        /* カードの枠線 */
+  --line-soft:#DADDD9;   /* 区切り線 */
+  --dash:#8E979F;        /* 点線・薄いグレー */
+  --accent:#D9553A;      /* 「あなたの席」の強調色 */
+  --accent-deep:#B8432B;
+  --accent-bg:#FBEAE4;
+  --font-sans:'Noto Sans JP','Hiragino Sans',sans-serif;
+  --font-mincho:'Zen Old Mincho','Hiragino Mincho ProN',serif;
+  --font-script:'Great Vibes',cursive;
+  --font-serif:'Cormorant Garamond',serif;
+}
+
+/* ---- 土台 ---- */
+body{margin:0;background:var(--paper)}
+button{font-family:inherit}
+.pg{position:relative;max-width:520px;margin:0 auto;font-family:var(--font-sans);font-weight:300;color:var(--navy);letter-spacing:.05em;overflow-x:clip;background:var(--paper)}
+.ct{position:relative;z-index:1}
+
+/* ---- 動き ---- */
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@keyframes taxi{from{top:-4%}to{top:102%}}
+.fade{animation:fadeUp 1.2s ease both}
+@supports (animation-timeline:view()){.rv{animation:fadeUp linear both;animation-timeline:view();animation-range:entry 0% cover 26%}}
+
+/* ---- 背景（空港の平面図・ページ全体でゆっくり流れる） ---- */
+.bgs{position:sticky;top:0;height:0;z-index:0}
+.bgv{position:absolute;left:0;top:0;width:100%;height:100vh;height:100lvh;overflow:hidden}
+.bgl{position:absolute;left:50%;top:0;height:170vh;aspect-ratio:704/1521;transform:translate(-62%,0);will-change:transform}
+.bgl>img{display:block;width:100%;height:100%}
+.bgl>.bgt{position:absolute;left:0;top:0;width:100%;height:100%}
+.taxi{position:absolute;left:83.8%;top:-4%;width:7.6%;margin-left:-3.8%;transform:rotate(180deg);animation:taxi 70s linear infinite}
+@media (prefers-reduced-motion:reduce){.taxi{display:none}}
+
+/* ---- 文字の種類 ---- */
+.jm{font-family:var(--font-mincho);font-weight:400}
+.gv{font-family:var(--font-script);font-weight:400}
+.cg{font-family:var(--font-serif)}
+.it{font-family:var(--font-serif);font-style:italic;font-weight:500}
+.lbl{font-family:var(--font-serif);font-style:italic;font-weight:500;font-size:17px;color:var(--green-deep)}
+.c{text-align:center}
+.ab{position:absolute;left:0;top:0;right:0;bottom:0}
+.glow{color:var(--navy);text-shadow:0 0 3px #fff,0 0 6px #fff,0 0 10px #fff,0 0 16px #fff,0 0 26px #fff,0 0 40px rgba(255,255,255,.9)}
+
+/* ---- カード・見出し ---- */
+.card{position:relative;margin:0 14px 136px;padding:56px 18px;background:var(--card);border:1px solid var(--line);box-shadow:0 12px 32px rgba(60,70,80,.14)}
+.hd{position:relative;text-align:center;margin-bottom:38px}
+.hd p{margin:0}
+.hd .k{font-family:var(--font-serif);font-style:italic;font-weight:500;font-size:18px;letter-spacing:.12em;color:var(--green-deep)}
+.hd h2{margin:2px 0 2px;font-family:var(--font-script);font-weight:400;font-size:60px;line-height:1.1}
+.hd .jp{font-family:var(--font-mincho);font-size:13px;letter-spacing:.34em}
+.dv{display:block;margin:16px auto 0}
+
+/* ---- プロフィール ---- */
+.pf-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.pf-photo{position:relative;margin:14px;aspect-ratio:3/4}
+.pf-frame{position:absolute;left:-10px;top:-10px;width:calc(100% + 20px);height:calc(100% + 20px);overflow:visible}
+.pf-in{overflow:hidden;display:flex;align-items:center;justify-content:center;background:#E3ECE6}
+.cover{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover}
+.qa{margin-top:54px;border-top:1px solid var(--line)}
+.qa-in{position:relative;padding:0 0 6px}
+.qa-axis{position:absolute;left:50%;top:30px;bottom:0;width:0;border-left:1px dashed var(--dash)}
+.qa-item{position:relative;padding:30px 6px 0}
+.qa-q{display:inline-block;background:var(--card);padding:4px 16px}
+.qa-a{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));margin-top:10px}
+.qa-a p{margin:0;font-size:15px;line-height:1.9}
+
+/* ---- 思い出の写真 ---- */
+.mem{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:80px;gap:3px;padding:3px;background:var(--navy)}
+.mem>div{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+
+/* ---- 席次表 ---- */
+.hall{position:relative;background:#EEF0EA;border:1px solid var(--line);padding:20px 12px 14px}
+.high{margin:0 auto 22px;width:66%;height:38px;display:flex;align-items:center;justify-content:center;background:var(--navy);color:#fff;font-size:16px;letter-spacing:.08em;clip-path:polygon(7% 0,93% 0,100% 50%,93% 100%,7% 100%,0 50%)}
+.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+.tile{min-height:74px;cursor:pointer;padding:8px 0 4px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-family:Cormorant Garamond,serif;font-size:24px;font-weight:500;line-height:1;background:#fff;color:var(--navy);border:1px solid #B8BEC4;box-shadow:none}
+.tile .pl{display:block;color:var(--dash)}
+.tile .pl svg{display:block;width:26px;height:29px}
+.tile.on{background:var(--navy);color:#fff}
+.tile.on .pl{color:#fff}
+.tile.me{border:2px solid var(--accent);box-shadow:0 0 0 3px rgba(217,85,58,.25)}
+.tile.me .pl{color:var(--accent)}
+.legend{margin-top:16px;display:flex;align-items:center;justify-content:center;gap:10px;font-size:12px;font-weight:400}
+.legend[hidden]{display:none}
+.legend span{display:inline-block;width:16px;height:16px;border:2px solid var(--accent);background:#fff}
+.doors{margin-top:14px;display:flex;justify-content:space-between;font-size:16px}
+.panel{margin-top:14px;background:#fff;padding:26px 14px 10px;border:1px solid var(--line)}
+.panel.mine{border:2px solid var(--accent)}
+.round{position:relative;width:210px;height:210px;margin:18px auto}
+.round-c{position:absolute;left:55px;top:55px;width:100px;height:100px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-size:46px}
+.dot{position:absolute;width:34px;height:34px;border-radius:50%;box-sizing:border-box;border:1px solid var(--dash);background:#fff;color:var(--navy);display:flex;align-items:center;justify-content:center;font-family:Cormorant Garamond,serif;font-weight:500;font-size:18px}
+.dot.me{border:2px solid var(--accent);background:#FBE4DD}
+.rows{border-top:1px solid var(--line-soft)}
+.row{display:flex;align-items:center;min-height:46px;border-bottom:1px solid #E6E8E4}
+.row.me{background:var(--accent-bg);margin:0 -14px;padding:0 14px;font-weight:500}
+.row .no{font-size:16px;color:var(--green-deep);width:64px;flex:none}
+.row .nm{font-size:15px}
+
+/* ---- メニュー ---- */
+.dish{margin-bottom:22px}
+.drinks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;text-align:left}
+.drinks .lbl{margin:0 0 10px;font-size:19px;white-space:nowrap}
+.drinks .list{border-left:2px solid var(--green);padding-left:14px}
+.drinks .list p{margin:0;padding:7px 0;font-size:15px}
+
+/* ---- 個別メッセージ（搭乗券） ---- */
+.pass{position:relative;margin:0 14px 136px;background:var(--card);border:1px solid var(--line);box-shadow:0 16px 30px rgba(40,50,60,.25)}
+.pt,.pb{background:var(--card)}
+.pass-grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1.1fr) minmax(0,.6fr);gap:12px}
+.pass-grid .lbl,.pass .lbl{font-size:16px}
+.pass-v{margin:2px 0 0;font-size:21px;font-weight:500}
+</style>
+</head>
+<body>
+<div class="pg" id="pg">
+
+<!-- 共通の図形（飛行機マーク #ac ／ 見出し下の飾り線 #dv） -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="ac" viewBox="0 0 200 220"><path d="M100 6C104 10 107.5 22 108 40L108 168C108 182 104 200 100 212C96 200 92 182 92 168L92 40C92.5 22 96 10 100 6Z"></path><path d="M108 80L190 133C193 135 194.5 138 193.5 141L191 146L134 124L108 129Z"></path><rect x="126.5" y="82" width="11" height="25" rx="5"></rect><path d="M107 178L137 199C139.5 201 140 203.5 139 206L107 197Z"></path><g transform="translate(200 0) scale(-1 1)"><path d="M108 80L190 133C193 135 194.5 138 193.5 141L191 146L134 124L108 129Z"></path><rect x="126.5" y="82" width="11" height="25" rx="5"></rect><path d="M107 178L137 199C139.5 201 140 203.5 139 206L107 197Z"></path></g></symbol>
+<symbol id="dv" viewBox="0 0 96 18"><path d="M4 9H34M62 9H92" stroke="#1F3558" stroke-width="1" stroke-opacity=".5"></path><g transform="translate(48 9) rotate(90)"><use href="#ac" x="-9" y="-10" width="18" height="20" fill="#5FB59A"></use></g></symbol>
+</defs></svg>
+
+<!-- ============ 背景：空港の平面図 ============ -->
+<div class="bgs" aria-hidden="true"><div class="bgv" id="bgv"><div class="bgl" id="bgl">
+<img src="assets/airport-map.jpg" alt="">
+<svg class="bgt" viewBox="0 0 704 1521" aria-hidden="true"><text x="262" y="124" transform="rotate(-34 262 118)" text-anchor="middle" font-family="'MS Gothic','ＭＳ ゴシック','MS PGothic','Osaka-Mono',monospace" font-size="17" font-weight="700" letter-spacing="3" fill="#6F7984" fill-opacity=".9">WELCOME!!</text></svg>
+<svg class="taxi" viewBox="-10 -10 220 240" aria-hidden="true"><g transform="translate(8 10)" fill="#6B7480" fill-opacity=".25"><use href="#ac" width="200" height="220"></use></g><g fill="#fff" stroke="#5F6A76" stroke-width="6" stroke-linejoin="round"><use href="#ac" width="200" height="220"></use></g></svg>
+</div></div></div>
+
+<div class="ct">
+
+<!-- ============ トップ ============ -->
+<div class="c fade" style="padding:110px 12px 170px">
+<div style="display:inline-block">
+<h1 class="gv glow" style="margin:0;font-size:64px;line-height:1.12;font-weight:400">Wedding<br>Reception</h1>
+<p class="gv glow" style="margin:12px -44px 0 0;font-size:27px;line-height:1.1;text-align:right">Taisuke &amp; Mirei</p>
+</div>
+</div>
+
+<!-- ============ Gate 01 ご挨拶 ============ -->
+<div class="card c">
+<div class="hd rv"><p class="k">Gate 01</p><h2>Greeting</h2><p class="jp">ご挨拶</p><svg class="dv" width="96" height="18" aria-hidden="true"><use href="#dv"></use></svg></div>
+<p class="jm rv" style="margin:0;font-size:16px;line-height:2.5">本日は私たちの結婚式に<br>お越しいただき、<br>誠にありがとうございます。</p>
+<p class="jm rv" style="margin:26px 0 0;font-size:16px;line-height:2.5;text-align:right;letter-spacing:.2em">泰典・美怜</p>
+</div>
+
+<!-- ============ Gate 02 プロフィール（内容は content.js） ============ -->
+<div class="card" style="padding-left:10px;padding-right:10px">
+<div class="hd rv"><p class="k">Gate 02</p><h2>Profile</h2><p class="jp">ふたりのプロフィール</p><svg class="dv" width="96" height="18" aria-hidden="true"><use href="#dv"></use></svg></div>
+<div class="pf-grid" id="profilePhotos"></div>
+<div class="qa"><div class="qa-in"><div class="qa-axis"></div><div id="qaList"></div></div></div>
+</div>
+
+<!-- ============ Gate 03 思い出の写真（内容は content.js） ============ -->
+<div class="card">
+<div class="hd rv"><p class="k">Gate 03</p><h2>Memories</h2><p class="jp">ふたりの思い出</p><svg class="dv" width="96" height="18" aria-hidden="true"><use href="#dv"></use></svg></div>
+<div class="mem" id="memories"></div>
+</div>
+
+<!-- ============ Gate 04 席次表（内容は guests.js） ============ -->
+<div class="card" style="padding-left:12px;padding-right:12px">
+<div class="hd rv"><p class="k">Gate 04</p><h2>Seating</h2><p class="jp">席次表</p><svg class="dv" width="96" height="18" aria-hidden="true"><use href="#dv"></use></svg></div>
+<p class="c" style="margin:-16px 0 24px;font-size:13px;font-weight:400">スポットをタップすると、お席の詳細が表示されます</p>
+<div class="hall">
+<div class="it c high">High Table ／ 高砂</div>
+<div class="tiles" id="tables"></div>
+<div class="legend" id="legend" hidden><span></span>あなたのテーブル</div>
+<div class="it doors"><span>Entrance ▸</span><span>◂ Exit</span></div>
+</div>
+<div id="seatPanel"></div>
+</div>
+
+<!-- ============ Gate 05 メニュー（内容は content.js） ============ -->
+<div class="card c">
+<div class="hd rv"><p class="k">Gate 05</p><h2>Menu</h2><p class="jp">本日のメニュー</p><svg class="dv" width="96" height="18" aria-hidden="true"><use href="#dv"></use></svg></div>
+<div id="menu"></div>
+<svg class="dv" width="96" height="18" aria-hidden="true" style="margin:30px auto 14px"><use href="#dv"></use></svg>
+<p class="gv" style="margin:0 0 22px;font-size:52px;line-height:1.1">Drink</p>
+<div class="drinks">
+<div><p class="lbl">Alcohol</p><div class="list" id="alcohol"></div></div>
+<div><p class="lbl">Non-alcoholic</p><div class="list" id="soft"></div></div>
+</div>
+</div>
+
+<!-- ============ Gate 06 個別メッセージ（内容は guests.js） ============ -->
+<div class="pass rv">
+<div class="hd rv" style="margin:0;padding:48px 18px 36px;border-bottom:1px solid var(--line-soft)"><p class="k">Gate 06</p><h2>Message</h2><p class="jp">あなたへのメッセージ</p><svg class="dv" width="96" height="18" aria-hidden="true"><use href="#dv"></use></svg></div>
+<div class="pt" style="padding:0 0 26px">
+<div style="padding:28px 20px 0">
+<p class="lbl" style="margin:0">Passenger</p>
+<p class="cg" id="passName" style="margin:4px 0 20px;font-size:27px;font-weight:500;letter-spacing:.06em;line-height:1.25"></p>
+<div class="pass-grid">
+<div><p class="lbl" style="margin:0">Date</p><p class="cg pass-v" style="white-space:nowrap">10 JAN 2027</p></div>
+<div><p class="lbl" style="margin:0">Group</p><p class="cg pass-v" id="passTable" style="white-space:nowrap"></p></div>
+<div><p class="lbl" style="margin:0">Seat</p><p class="cg pass-v" id="passSeat"></p></div>
+</div></div></div>
+<div class="pb" style="padding:0 0 30px">
+<div style="margin:0 20px;border-top:1px dashed var(--dash)"></div>
+<div style="padding:26px 22px 0"><p class="lbl" style="margin:0 0 10px">Remarks</p>
+<p class="jm" id="passMessage" style="margin:0;font-size:15px;line-height:2.1;white-space:pre-line"></p>
+<p class="gv" style="margin:22px 0 0;text-align:right;font-size:36px;color:var(--green-deep)">Taisuke &amp; Mirei</p></div>
+</div>
+</div>
+
+<!-- ============ おわりに ============ -->
+<div style="height:120px"></div>
+<div class="card c" style="padding:44px 18px 46px;margin-bottom:40px">
+<p class="gv" style="margin:0;font-size:56px;line-height:1.1">Thank you</p>
+<p class="it" style="margin:10px 0 0;font-size:18px;letter-spacing:.14em;color:var(--green-deep)">Taisuke &amp; Mirei ・ 2027.01.10</p>
+</div>
+
+</div>
+</div>
+
+<script src="guests.js"></script>
+<script src="content.js"></script>
+<script>
+(function () {
+  'use strict';
+  var $ = function (id) { return document.getElementById(id); };
+  var esc = function (s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (ch) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch];
+    });
+  };
+  var letter = function (n) { return String.fromCharCode(64 + n); };   // 1 → A
+
+  // ---------- URL の ?id= から本人を特定 ----------
+  var guest = null;
+  try {
+    var id = new URLSearchParams(window.location.search).get('id');
+    if (id && Object.prototype.hasOwnProperty.call(GUESTS, id)) guest = GUESTS[id];
+  } catch (e) {}
+
+  // ---------- Gate 06 個別メッセージ ----------
+  $('passName').textContent = guest ? (guest.pass || guest.name) : 'OUR DEAR GUEST';
+  $('passTable').textContent = guest ? letter(guest.table) : '–';
+  $('passSeat').textContent = guest ? guest.seat : '–';
+  $('passMessage').textContent = guest ? guest.message : COMMON_MESSAGE;
+
+  // ---------- Gate 02 プロフィール ----------
+  $('profilePhotos').innerHTML = PROFILE.map(function (f, i) {
+    return '<div' + (i ? ' style="margin-top:34px"' : '') + '>' +
+      '<div class="pf-photo">' +
+        '<div class="ab" style="transform:rotate(' + (i ? '4deg' : '-4deg') + ')"><svg class="pf-frame" aria-hidden="true"><rect x=".5%" y=".5%" width="99%" height="99%" fill="none" stroke="#5FB59A" stroke-width="1.4"></rect></svg></div>' +
+        '<svg class="pf-frame" aria-hidden="true"><rect x=".5%" y=".5%" width="99%" height="99%" fill="none" stroke="#1F3558" stroke-width="1.2"></rect></svg>' +
+        '<div class="ab pf-in">' +
+          (f.src ? '<img class="cover" src="' + esc(f.src) + '" alt="' + esc(f.en) + '">'
+                 : '<span class="it" style="font-size:17px">Photo</span>') +
+        '</div>' +
+      '</div>' +
+      '<p class="lbl c" style="margin:22px 0 0;letter-spacing:.12em">' + esc(f.role) + '</p>' +
+      '<p class="gv c" style="margin:0;font-size:44px;line-height:1.1">' + esc(f.en) + '</p>' +
+      '<p class="jm c" style="margin:2px 0 0;font-size:13px;letter-spacing:.3em">' + esc(f.jp) + '</p>' +
+    '</div>';
+  }).join('');
+
+  $('qaList').innerHTML = QA.map(function (q, i) {
+    var n = String(i + 1).padStart(2, '0');
+    return '<div class="qa-item rv">' +
+      '<div class="c"><span class="qa-q"><span class="it" style="font-size:22px;color:var(--green-deep)">' + n + '</span><br><span class="jm" style="font-size:13px;letter-spacing:.3em">' + esc(q.q) + '</span></span></div>' +
+      '<div class="qa-a">' +
+        '<p class="jm" style="padding:0 16px 0 0;text-align:right">' + esc(q.groom) + '</p>' +
+        '<p class="jm" style="padding:0 0 0 16px;text-align:left">' + esc(q.bride) + '</p>' +
+      '</div></div>';
+  }).join('');
+
+  // ---------- Gate 03 思い出の写真（ステンドグラス風の10枠） ----------
+  var CELLS = [
+    { c: 1, r: 1, w: 2, h: 3 }, { c: 3, r: 1, w: 1, h: 2 }, { c: 4, r: 1, w: 1, h: 3 }, { c: 3, r: 3, w: 1, h: 1 },
+    { c: 1, r: 4, w: 1, h: 2 }, { c: 2, r: 4, w: 2, h: 2 }, { c: 4, r: 4, w: 1, h: 2 },
+    { c: 1, r: 6, w: 2, h: 2 }, { c: 3, r: 6, w: 1, h: 2 }, { c: 4, r: 6, w: 1, h: 2 }
+  ];
+  var CLIPS = ['polygon(0 0,100% 4%,96% 100%,0 96%)', 'polygon(4% 0,100% 0,100% 96%,0 100%)', 'polygon(0 4%,96% 0,100% 100%,4% 100%)', 'polygon(0 0,96% 4%,100% 100%,0 96%)'];
+  var TINTS = ['#BFE3D0', '#E9E7DC', '#C9CED3', '#F3F2EA', '#A9D6C0', '#DADDD9', '#CFE9DC', '#B8BEC4'];
+  $('memories').innerHTML = CELLS.map(function (p, i) {
+    var src = MEMORY_PHOTOS[i];
+    return '<div style="grid-column:' + p.c + ' / span ' + p.w + ';grid-row:' + p.r + ' / span ' + p.h + ';background:' + TINTS[i % 8] + ';clip-path:' + CLIPS[i % 4] + '">' +
+      (src ? '<img class="cover" src="' + esc(src) + '" alt="思い出の写真 ' + (i + 1) + '" loading="lazy">'
+           : '<span class="it" style="font-size:16px">' + (i + 1) + '</span>') +
+    '</div>';
+  }).join('');
+
+  // ---------- Gate 05 メニュー ----------
+  $('menu').innerHTML = MENU.map(function (m) {
+    return '<div class="dish rv"><p class="lbl" style="margin:0;letter-spacing:.06em">' + esc(m.en) + '</p><p class="jm" style="margin:2px 0 0;font-size:16px">' + esc(m.ja) + '</p></div>';
+  }).join('');
+  var drinkList = function (list) { return list.map(function (t) { return '<p class="jm">' + esc(t) + '</p>'; }).join(''); };
+  $('alcohol').innerHTML = drinkList(DRINK_ALCOHOL);
+  $('soft').innerHTML = drinkList(DRINK_SOFT);
+
+  // ---------- Gate 04 席次表 ----------
+  var TABLES = 12, SEATS = 8;
+  var SUR = ['山本', '中村', '小林', '加藤', '木村', '林', '清水', '森', '渡辺', '松本', '井上', '斎藤', '山口', '阿部', '池田', '橋本'];
+  var GIV = ['恵', '大輔', '誠', '優子', '亮', '由美', '彩', '翔', '真理', '浩', '咲良', '健二', '久美子', '拓也', '舞'];
+  var seatName = function (t, s) {
+    for (var k in GUESTS) {
+      if (Object.prototype.hasOwnProperty.call(GUESTS, k) && GUESTS[k].table === t && GUESTS[k].seat === s) return GUESTS[k].name;
+    }
+    if (!FILL_EMPTY_SEATS_WITH_DUMMY) return '—';
+    return SUR[(t * 5 + s * 3) % 16] + ' ' + GIV[(t * 7 + s * 2) % 15] + ' 様';
+  };
+
+  var selected = guest ? guest.table : null;   // 最初は本人の卓を開いておく
+  var mine = guest ? guest.table : -1;
+  $('legend').hidden = !guest;
+
+  var renderSeating = function () {
+    var tiles = '';
+    for (var n = 1; n <= TABLES; n++) {
+      var on = selected === n, me = mine === n;
+      tiles += '<button type="button" class="tile' + (on ? ' on' : '') + (me ? ' me' : '') + '" data-table="' + n + '" aria-label="テーブル' + letter(n) + '" aria-pressed="' + on + '">' +
+        '<span class="pl"><svg viewBox="0 0 200 220" aria-hidden="true"><use href="#ac" fill="currentColor"></use></svg></span><span>' + letter(n) + '</span></button>';
+    }
+    $('tables').innerHTML = tiles;
+
+    if (selected == null) { $('seatPanel').innerHTML = ''; return; }
+    var isMine = !!guest && selected === guest.table;
+    var dots = '', rows = '';
+    for (var s = 1; s <= SEATS; s++) {
+      var a = (s - 1) * Math.PI / 4;
+      var left = 105 + 86 * Math.sin(a) - 17, top = 105 - 86 * Math.cos(a) - 17;
+      var isMe = isMine && guest.seat === s;
+      dots += '<div class="dot' + (isMe ? ' me' : '') + '" style="left:' + left + 'px;top:' + top + 'px">' + s + '</div>';
+      rows += '<div class="row' + (isMe ? ' me' : '') + '"><span class="it no">Seat ' + s + '</span><span class="jm nm">' + esc(seatName(selected, s)) + '</span></div>';
+    }
+    $('seatPanel').innerHTML =
+      '<div class="panel' + (isMine ? ' mine' : '') + '">' +
+        '<p class="cg c" style="margin:0;font-size:30px;letter-spacing:.18em">Table ' + letter(selected) + '</p>' +
+        (isMine ? '<p class="it c" style="margin:2px 0 0;font-size:18px;color:var(--accent-deep)">Your Table</p>' : '') +
+        '<div class="round"><div class="cg round-c">' + letter(selected) + '</div>' + dots + '</div>' +
+        '<div class="rows">' + rows + '</div>' +
+      '</div>';
+  };
+  $('tables').addEventListener('click', function (e) {
+    var b = e.target.closest ? e.target.closest('button[data-table]') : null;
+    if (!b) return;
+    selected = Number(b.getAttribute('data-table'));
+    renderSeating();
+  });
+  renderSeating();
+
+  // ---------- 背景：スクロール量に合わせて平面図を上から下まで流す ----------
+  (function setupBg() {
+    var pg = $('pg'), bgv = $('bgv'), bgl = $('bgl');
+    if (!pg || !bgv || !bgl) return;
+    var RATIO = 1521 / 704, raf = 0;
+    var apply = function () {
+      raf = 0;
+      var vh = window.innerHeight;
+      var r = pg.getBoundingClientRect();
+      var travel = r.height - vh;
+      if (travel < 60) {
+        bgv.style.height = r.height + 'px';
+        bgl.style.height = (r.width * RATIO) + 'px';
+        bgl.style.transform = 'translate(-50%,0)';
+        return;
+      }
+      var imgH = Math.max(vh * 1.7, r.width * RATIO * 1.25);
+      var p = Math.min(1, Math.max(0, (0 - r.top) / travel));
+      bgv.style.height = (vh + 120) + 'px';
+      bgl.style.height = imgH + 'px';
+      bgl.style.transform = 'translate(-62%,' + (-p * (imgH - vh)).toFixed(1) + 'px)';
+    };
+    var req = function () { if (!raf) raf = requestAnimationFrame(apply); };
+    window.addEventListener('scroll', req, { passive: true });
+    window.addEventListener('resize', req);
+    window.addEventListener('load', req);
+    apply(); setTimeout(apply, 400); setTimeout(apply, 1500);
+  })();
+})();
+</script>
+</body>
+</html>
