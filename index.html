@@ -6,9 +6,14 @@
 <meta name="robots" content="noindex,nofollow">
 <meta name="format-detection" content="telephone=no">
 <title>Taisuke &amp; Mirei Wedding</title>
+<script>
+/* フォントが揃うまで文字部分を隠す合図（最長4秒で必ず解除する保険つき） */
+document.documentElement.classList.add('wait');
+setTimeout(function(){document.documentElement.classList.remove('wait');},4000);
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Great+Vibes&amp;family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400;1,500&amp;family=Zen+Old+Mincho:wght@400;500&amp;family=Noto+Sans+JP:wght@300;400&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Great+Vibes&amp;family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400;1,500&amp;family=Zen+Old+Mincho:wght@400;500&amp;family=Noto+Sans+JP:wght@300;400&amp;display=block">
 <style>
 /* =====================================================================
    デザインの基本設定（色・フォント）— ここを変えると全体に反映されます
@@ -35,7 +40,10 @@
 body{margin:0;background:var(--paper)}
 button{font-family:inherit}
 .pg{position:relative;max-width:520px;margin:0 auto;font-family:var(--font-sans);font-weight:300;color:var(--navy);letter-spacing:.05em;overflow-x:clip;background:var(--paper)}
-.ct{position:relative;z-index:1}
+.ct{position:relative;z-index:1;transition:opacity .7s ease}
+/* フォント読み込み待ち：文字部分だけ隠し、背景は先に見せる */
+html.wait .ct{opacity:0}
+html.wait .fade{animation-play-state:paused}
 
 /* ---- 動き ---- */
 @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
@@ -359,6 +367,24 @@ button{font-family:inherit}
     renderSeating();
   });
   renderSeating();
+
+  // ---------- フォントが揃ってから文字部分を表示する ----------
+  // 画面内の文字と名簿の名前を渡し、必要な字形だけを先に読み込ませる（日本語フォントは分割配信のため）
+  (function revealWhenFontsReady() {
+    var done = false;
+    var reveal = function () { if (done) return; done = true; document.documentElement.classList.remove('wait'); };
+    setTimeout(reveal, 3000);                       // 回線が遅いときは3秒で打ち切って表示
+    if (!document.fonts || !document.fonts.load) { reveal(); return; }
+    var text = $('pg').textContent + SUR.join('') + GIV.join('') + '様—';
+    for (var k in GUESTS) if (Object.prototype.hasOwnProperty.call(GUESTS, k)) text += GUESTS[k].name;
+    var fonts = [
+      '400 1em "Great Vibes"',
+      '300 1em "Cormorant Garamond"', '500 1em "Cormorant Garamond"', 'italic 500 1em "Cormorant Garamond"',
+      '400 1em "Zen Old Mincho"',
+      '300 1em "Noto Sans JP"', '400 1em "Noto Sans JP"'
+    ];
+    Promise.all(fonts.map(function (f) { return document.fonts.load(f, text).catch(function () {}); })).then(reveal, reveal);
+  })();
 
   // ---------- 背景：スクロール量に合わせて平面図を上から下まで流す ----------
   (function setupBg() {
