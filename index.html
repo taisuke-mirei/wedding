@@ -203,7 +203,8 @@ html.wait .fade{animation-play-state:paused}
 <div class="hd rv"><p class="k">Gate 05</p><h2>Menu</h2><p class="jp">おしながき</p><svg class="dv" width="96" height="18" aria-hidden="true"><use href="#dv"></use></svg></div>
 <div id="menu"></div>
 <svg class="dv" width="96" height="18" aria-hidden="true" style="margin:30px auto 14px"><use href="#dv"></use></svg>
-<p class="gv" style="margin:0 0 22px;font-size:52px;line-height:1.1">Drink</p>
+<p class="gv" style="margin:0;font-size:52px;line-height:1.1">Drink</p>
+<p class="jm" style="margin:2px 0 22px;font-size:13px;letter-spacing:.34em">お飲み物</p>
 <div class="drinks">
 <div><p class="lbl">Alcohol</p><div class="list" id="alcohol"></div></div>
 <div><p class="lbl">Non-alcoholic</p><div class="list" id="soft"></div></div>
@@ -395,6 +396,8 @@ html.wait .fade{animation-play-state:paused}
     var pg = $('pg'), bgv = $('bgv'), bgl = $('bgl');
     if (!pg || !bgv || !bgl) return;
     var RATIO = 1521 / 704, raf = 0;
+    var BG_SCALE = 1.5;   // 背景の大きさ（画面の高さの何倍か）。小さくすると画像が縮んで広い範囲が見える
+    var MIN_W = 1.35;     // 横幅の下限（画面幅の何倍か）。左に62%ずらしているため、これより小さいと右端に隙間ができる
     var makeProbe = function (unit) {          // 画面の高さを測るための見えない箱
       var d = document.createElement('div');
       d.style.cssText = 'position:fixed;left:0;top:0;width:0;height:100vh;height:100' + unit + ';visibility:hidden;pointer-events:none';
@@ -408,7 +411,7 @@ html.wait .fade{animation-play-state:paused}
       var sv = small.offsetHeight || window.innerHeight;
       var lv = Math.max(large.offsetHeight || window.innerHeight, sv);
       if (size && size.w === w && size.sv === sv && size.lv === lv) return;   // 回転などで変わったときだけ計算し直す
-      var imgH = Math.max(sv * 1.7, w * RATIO * 1.25, lv);
+      var imgH = Math.max(sv * BG_SCALE, w * RATIO * MIN_W, lv);
       size = { w: w, sv: sv, lv: lv, imgH: imgH };
       bgv.style.height = (lv + 120) + 'px';
       bgl.style.height = imgH + 'px';
