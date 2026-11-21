@@ -387,33 +387,39 @@ html.wait .fade{animation-play-state:paused}
   })();
 
   // ---------- 背景：スクロール量に合わせて平面図を上から下まで流す ----------
-  // 画像の大きさは「アドレスバーを隠したときの最大の画面の高さ（lvh）」で決めて固定する。
+  // 画像の大きさは「アドレスバーが表示されているときの画面の高さ（svh）」で決めて固定する。
   // window.innerHeight はスクロールでアドレスバーが出入りするたびに変わるため、
   // それを基準に毎回計算し直すと、画像が拡大・縮小して見えてしまう。
+  // 動かす範囲だけは最大の高さ（lvh）で計算し、アドレスバーが隠れても下に隙間が出ないようにする。
   (function setupBg() {
     var pg = $('pg'), bgv = $('bgv'), bgl = $('bgl');
     if (!pg || !bgv || !bgl) return;
     var RATIO = 1521 / 704, raf = 0;
-    var probe = document.createElement('div');   // 最大の画面の高さを測るための見えない箱
-    probe.style.cssText = 'position:fixed;left:0;top:0;width:0;height:100vh;height:100lvh;visibility:hidden;pointer-events:none';
-    document.body.appendChild(probe);
+    var makeProbe = function (unit) {          // 画面の高さを測るための見えない箱
+      var d = document.createElement('div');
+      d.style.cssText = 'position:fixed;left:0;top:0;width:0;height:100vh;height:100' + unit + ';visibility:hidden;pointer-events:none';
+      document.body.appendChild(d);
+      return d;
+    };
+    var small = makeProbe('svh'), large = makeProbe('lvh');
     var size = null;
     var measure = function () {
       var w = pg.getBoundingClientRect().width;
-      var vh = probe.offsetHeight || window.innerHeight;
-      if (size && size.w === w && size.vh === vh) return;   // 回転などで変わったときだけ計算し直す
-      var imgH = Math.max(vh * 1.7, w * RATIO * 1.25);
-      size = { w: w, vh: vh, imgH: imgH };
-      bgv.style.height = (vh + 120) + 'px';
+      var sv = small.offsetHeight || window.innerHeight;
+      var lv = Math.max(large.offsetHeight || window.innerHeight, sv);
+      if (size && size.w === w && size.sv === sv && size.lv === lv) return;   // 回転などで変わったときだけ計算し直す
+      var imgH = Math.max(sv * 1.7, w * RATIO * 1.25, lv);
+      size = { w: w, sv: sv, lv: lv, imgH: imgH };
+      bgv.style.height = (lv + 120) + 'px';
       bgl.style.height = imgH + 'px';
     };
     var apply = function () {
       raf = 0;
       measure();
       var r = pg.getBoundingClientRect();
-      var travel = Math.max(1, r.height - size.vh);
+      var travel = Math.max(1, r.height - size.lv);
       var p = Math.min(1, Math.max(0, -r.top / travel));
-      bgl.style.transform = 'translate(-62%,' + (-p * (size.imgH - size.vh)).toFixed(1) + 'px)';
+      bgl.style.transform = 'translate(-62%,' + (-p * (size.imgH - size.lv)).toFixed(1) + 'px)';
     };
     var req = function () { if (!raf) raf = requestAnimationFrame(apply); };
     window.addEventListener('scroll', req, { passive: true });
